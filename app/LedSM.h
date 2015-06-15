@@ -4,6 +4,8 @@
 #include "State.h"
 #include <stdint.h>
 
+#include "stm32f4xx_hal_gpio.h"
+
 typedef struct {
   State state;
   uint32_t time;
