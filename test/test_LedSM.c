@@ -33,4 +33,76 @@ void test_module_generator_needs_to_be_implemented(void){
   
   ledSM(&ledData);
   TEST_ASSERT_EQUAL(ledData.state,LED_BLINKING_OFF);
+  
+	ledSM(&ledData);
+	TEST_ASSERT_EQUAL(ledData.state,LED_BLINKING_ON);
+  
+	isButtonPressed_ExpectAndReturn(false);
+	buttonSM(&buttonData);
+	ledSM(&ledData);
+	TEST_ASSERT_EQUAL(ledData.state,LED_BLINKING_OFF);
+  
+	isButtonPressed_ExpectAndReturn(false);
+	buttonSM(&buttonData);
+	ledSM(&ledData);
+	TEST_ASSERT_EQUAL(ledData.state,LED_BLINKING_ON);
+  
+	isButtonPressed_ExpectAndReturn(true);
+	buttonSM(&buttonData);
+	ledSM(&ledData);
+	TEST_ASSERT_EQUAL(ledData.state,LED_ON);
+  
+	isButtonPressed_ExpectAndReturn(false);
+	buttonSM(&buttonData);
+	ledSM(&ledData);
+	TEST_ASSERT_EQUAL(ledData.state,LED_ON);
+  
+	isButtonPressed_ExpectAndReturn(true);
+	buttonSM(&buttonData);
+	ledSM(&ledData);
+	TEST_ASSERT_EQUAL(ledData.state,LED_OFF);
+}
+
+void test_init_led(){
+  LedData ledData;
+  
+  ledInitData(&ledData);
+  
+  ledSM(&ledData);
+  TEST_ASSERT_EQUAL(ledData.state,LED_OFF);
+}
+
+void test_init_led_for_msg_changing_mode(){
+  LedData ledData;
+  
+  ledInitData(&ledData);
+  msg = CHANGE_MODE;
+  ledSM(&ledData);
+  TEST_ASSERT_EQUAL(ledData.state,LED_BLINKING_ON);
+}
+
+void test_led_with_blinking_for_msg_DO_NOTHING(void){
+  LedData ledData;
+  
+  ledInitData(&ledData);
+  msg = CHANGE_MODE;
+  ledSM(&ledData);
+  TEST_ASSERT_EQUAL(ledData.state, LED_BLINKING_ON);
+  
+  msg = DO_NOTHING;
+  ledSM(&ledData);
+  TEST_ASSERT_EQUAL(ledData.state, LED_BLINKING_OFF);
+}
+
+void test_led_with_blinking_for_msg_CHANGE_MODE(void){
+  LedData ledData;
+  
+  ledInitData(&ledData);
+  msg = CHANGE_MODE;
+  ledSM(&ledData);
+  TEST_ASSERT_EQUAL(ledData.state, LED_BLINKING_ON);
+  
+  msg = CHANGE_MODE;
+  ledSM(&ledData);
+  TEST_ASSERT_EQUAL(ledData.state, LED_ON);
 }

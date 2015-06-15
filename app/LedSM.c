@@ -35,7 +35,7 @@ void ledSM(LedData *data){
     
   case LED_BLINKING_OFF:
     //if(data->time <= delay()){
-      data->state = LED_ON;
+      data->state = LED_BLINKING_ON;
     //}
     if(msg == CHANGE_MODE){
       data->state = LED_ON;
