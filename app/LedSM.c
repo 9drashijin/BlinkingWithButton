@@ -1,5 +1,6 @@
 #include "LedSM.h"
 #include "Message.h"
+#include "timer.h"
 #include <stdio.h>
 
 void ledInitData(LedData *data){
@@ -23,13 +24,19 @@ void ledSM(LedData *data){
     break;
     
   case LED_BLINKING_ON:
-    if(msg == CHANGE_MODE){
+    //if(data->time <= delay()){
       data->state = LED_BLINKING_OFF;
+    //}
+    if(msg == CHANGE_MODE){
+      data->state = LED_ON;
       msg = DO_NOTHING;
     }
     break;
     
   case LED_BLINKING_OFF:
+    //if(data->time <= delay()){
+      data->state = LED_ON;
+    //}
     if(msg == CHANGE_MODE){
       data->state = LED_ON;
       msg = DO_NOTHING;

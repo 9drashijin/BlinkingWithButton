@@ -30,4 +30,7 @@ void test_message_passing_send_a_message_LedState_should_change_to_LED_ON(void){
   
   ledSM(&ledData);
   TEST_ASSERT_EQUAL(ledData.state,LED_BLINKING_ON);
+  
+  ledSM(&ledData);
+  TEST_ASSERT_EQUAL(ledData.state,LED_BLINKING_OFF);
 }
